@@ -1,0 +1,7 @@
+*.suo
+*.user
+
+ADSCourseProject/ADSCourseProject/bin/*
+ADSCourseProject/ADSCourseProject/obj/*
+
+_ReSharper.ADSCourseProject/
