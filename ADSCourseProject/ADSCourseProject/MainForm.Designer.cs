@@ -34,6 +34,10 @@
             this.lblConnectsCount = new System.Windows.Forms.Label();
             this.nConnectsCount = new System.Windows.Forms.NumericUpDown();
             this.btnDrawGraph = new System.Windows.Forms.Button();
+            this.tbLog = new System.Windows.Forms.RichTextBox();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.btnStop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nComputersCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nConnectsCount)).BeginInit();
             this.SuspendLayout();
@@ -51,7 +55,7 @@
             this.gViewer.NavigationVisible = false;
             this.gViewer.PanButtonPressed = false;
             this.gViewer.SaveButtonVisible = true;
-            this.gViewer.Size = new System.Drawing.Size(542, 364);
+            this.gViewer.Size = new System.Drawing.Size(407, 545);
             this.gViewer.TabIndex = 0;
             this.gViewer.ZoomF = 1D;
             this.gViewer.ZoomFraction = 0.5D;
@@ -60,7 +64,7 @@
             // 
             // nComputersCount
             // 
-            this.nComputersCount.Location = new System.Drawing.Point(707, 10);
+            this.nComputersCount.Location = new System.Drawing.Point(559, 10);
             this.nComputersCount.Maximum = new decimal(new int[] {
             10,
             0,
@@ -83,7 +87,7 @@
             // lblComputersCount
             // 
             this.lblComputersCount.AutoSize = true;
-            this.lblComputersCount.Location = new System.Drawing.Point(606, 12);
+            this.lblComputersCount.Location = new System.Drawing.Point(458, 12);
             this.lblComputersCount.Name = "lblComputersCount";
             this.lblComputersCount.Size = new System.Drawing.Size(95, 13);
             this.lblComputersCount.TabIndex = 2;
@@ -92,7 +96,7 @@
             // lblConnectsCount
             // 
             this.lblConnectsCount.AutoSize = true;
-            this.lblConnectsCount.Location = new System.Drawing.Point(611, 38);
+            this.lblConnectsCount.Location = new System.Drawing.Point(463, 38);
             this.lblConnectsCount.Name = "lblConnectsCount";
             this.lblConnectsCount.Size = new System.Drawing.Size(90, 13);
             this.lblConnectsCount.TabIndex = 4;
@@ -100,7 +104,7 @@
             // 
             // nConnectsCount
             // 
-            this.nConnectsCount.Location = new System.Drawing.Point(707, 36);
+            this.nConnectsCount.Location = new System.Drawing.Point(559, 36);
             this.nConnectsCount.Maximum = new decimal(new int[] {
             10,
             0,
@@ -115,14 +119,14 @@
             this.nConnectsCount.Size = new System.Drawing.Size(40, 20);
             this.nConnectsCount.TabIndex = 3;
             this.nConnectsCount.Value = new decimal(new int[] {
-            3,
+            2,
             0,
             0,
             0});
             // 
             // btnDrawGraph
             // 
-            this.btnDrawGraph.Location = new System.Drawing.Point(573, 62);
+            this.btnDrawGraph.Location = new System.Drawing.Point(425, 62);
             this.btnDrawGraph.Name = "btnDrawGraph";
             this.btnDrawGraph.Size = new System.Drawing.Size(174, 23);
             this.btnDrawGraph.TabIndex = 5;
@@ -130,19 +134,58 @@
             this.btnDrawGraph.UseVisualStyleBackColor = true;
             this.btnDrawGraph.Click += new System.EventHandler(this.btnDrawGraph_Click);
             // 
+            // tbLog
+            // 
+            this.tbLog.Location = new System.Drawing.Point(425, 147);
+            this.tbLog.Name = "tbLog";
+            this.tbLog.Size = new System.Drawing.Size(174, 410);
+            this.tbLog.TabIndex = 6;
+            this.tbLog.Text = "";
+            // 
+            // btnRun
+            // 
+            this.btnRun.Location = new System.Drawing.Point(425, 91);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(174, 23);
+            this.btnRun.TabIndex = 7;
+            this.btnRun.Text = "btnRun";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.WorkerSupportsCancellation = true;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(425, 118);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(174, 23);
+            this.btnStop.TabIndex = 8;
+            this.btnStop.Text = "btnStop";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(759, 388);
+            this.ClientSize = new System.Drawing.Size(614, 569);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.btnRun);
+            this.Controls.Add(this.tbLog);
             this.Controls.Add(this.btnDrawGraph);
             this.Controls.Add(this.lblConnectsCount);
             this.Controls.Add(this.nConnectsCount);
             this.Controls.Add(this.lblComputersCount);
             this.Controls.Add(this.nComputersCount);
             this.Controls.Add(this.gViewer);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.nComputersCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nConnectsCount)).EndInit();
             this.ResumeLayout(false);
@@ -158,6 +201,10 @@
         private System.Windows.Forms.NumericUpDown nConnectsCount;
         private System.Windows.Forms.Button btnDrawGraph;
         private Microsoft.Glee.GraphViewerGdi.GViewer gViewer;
+        private System.Windows.Forms.RichTextBox tbLog;
+        private System.Windows.Forms.Button btnRun;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 
