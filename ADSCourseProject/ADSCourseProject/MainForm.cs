@@ -19,9 +19,12 @@ namespace ADSCourseProject
             InitializeComponent();
 
             backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
-            backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);           
+            backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
+
+            btnDrawGraph_Click(null, null);
         }
 
+        private int[,] peaks;
         private void btnDrawGraph_Click(object sender, EventArgs e)
         {
             int cc = (int) nComputersCount.Value;
@@ -29,7 +32,7 @@ namespace ADSCourseProject
             int connections = cc*2;
             //if(connections>
 
-            int[,] peaks = new int[cc,cc];
+            peaks = new int[cc,cc];
 
             for (int i = 0; i < cc; i++)
                 for (int j = 0; j < cc; j++)
@@ -139,21 +142,46 @@ namespace ADSCourseProject
         private void btnRun_Click(object sender, EventArgs e)
         {
             //initialize observer
-            o = new Observer(new ObserverParameters {ComputersCount = (int) nComputersCount.Value, TimeInterval = 1000});
+            o = new Observer(new ObserverParameters
+                                 {
+                                     ComputersCount = (int) nComputersCount.Value,
+                                     TimeInterval = 1*1000,
+                                     Graph = peaks
+                                 });
 
-            //TODO: move this to other isolated method
-            //main UI update method
-            this.backgroundWorker.ProgressChanged +=
-                (ob, v) =>
-                    {
-                        //BUG: Lambda expression here can crush application on exit
-                        o.Packets.ForEach(delegate(Packet p) { tbLog.AppendText(p.ToString()); });
-                        tbLog.AppendFormat("\r\n\r\n");
-                    };
+            
+            
+            this.backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
 
             //start background thread
             backgroundWorker.RunWorkerAsync();
             btnRun.Enabled = false;
+        }
+
+        //main UI update method
+        void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            //BUG: Lambda expression here can crush application on exit
+            o.Packets.ForEach(delegate(Packet p)
+            {
+                var s =
+                    gViewer.Graph.Edges.FirstOrDefault(
+                        ed =>
+                        ed.Source == p.Sender.ToString() &&
+                        ed.Target == p.Receiver.ToString());
+
+                if (s != null)
+                    s.EdgeAttr.Label = p.Size.ToString();
+                /*
+                if (s != null)
+                {
+                    //gViewer.Graph.Edges.Remove(s);
+                    gViewer.Graph.Edges.Add(s);
+                }*/
+                tbLog.AppendText(p.ToString());
+            });
+            tbLog.AppendFormat("\r\n Updated \r\n");
+            this.gViewer.Invalidate();
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

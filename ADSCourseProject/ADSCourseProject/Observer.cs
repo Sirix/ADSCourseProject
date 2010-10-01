@@ -51,6 +51,7 @@ namespace ADSCourseProject
         {
             int packetsCount = _rnd.Next(0, Parameters.ComputersCount);
 
+            packetsCount = 2;
             for (int i = 0; i < packetsCount; i++)
             {
                 int sender, receiver;
@@ -59,7 +60,7 @@ namespace ADSCourseProject
                 {
                     sender = _rnd.Next(0, Parameters.ComputersCount);
                     receiver = _rnd.Next(0, Parameters.ComputersCount);
-                } while (sender == receiver);
+                } while (sender == receiver || (Parameters.Graph[sender, receiver] == -1));
 
                 Packets.Add(new Packet
                                 {
@@ -70,8 +71,13 @@ namespace ADSCourseProject
                                 });
             }
 
+            //Packet updating 
+
+
+            //
             //TODO: Update sleep interval to (WaitingTimeInterval - RealTime)
             Thread.Sleep(Parameters.TimeInterval);
+            //this.Cancelling = true;
 
             return new NetStateArgs { Time = DateTime.Now.ToLongTimeString(), O = (int)2 };
         }        
