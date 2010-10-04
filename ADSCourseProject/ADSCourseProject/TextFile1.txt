@@ -1,0 +1,8 @@
+﻿{TIME} Packet sended! {PACKET_INFO}    #Observer.pushPacket
+----
+{TIME} Packet {PACKET_INFO} moved to {next-host}
+{TIME} Packet {PACKET_INFO} moved to {next-host}
+{TIME} Packet {PACKET_INFO} moved to {next-host}
+----
+{TIME} Packet {PACKET_INFO} delivered  #Observer.popPacket
+

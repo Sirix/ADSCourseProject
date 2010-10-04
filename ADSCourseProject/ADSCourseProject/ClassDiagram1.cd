@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ADSCourseProject.MainForm" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAACAiGAARAIAAQCQIIACgFAEAAAgCAAAQIAEgAI=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.NetStateArgs" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAQA=</HashCode>
+      <FileName>NetStateArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.Observer">
+    <Position X="4" Y="2.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AABAAABEAgAACAAAAAAAAAAAAAAAAAAAAIAAAAAAQAA=</HashCode>
+      <FileName>Observer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.ObserverParameters">
+    <Position X="2.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAACAAAAAAAQAgAAAAAAAAAAAA=</HashCode>
+      <FileName>ObserverParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.Packet">
+    <Position X="5.75" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAEAAACAAAAAAAEAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Packet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.Program" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.RichTextBoxHelper" Collapsed="true">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.NodeHelper" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.Properties.Resources">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ADSCourseProject.Properties.Settings">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="ADSCourseProject.ObserverEventHandler">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Observer.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

@@ -60,10 +60,11 @@ namespace ADSCourseProject
                 {
                     sender = _rnd.Next(0, Parameters.ComputersCount);
                     receiver = _rnd.Next(0, Parameters.ComputersCount);
-                } while (sender == receiver || (Parameters.Graph[sender, receiver] == -1));
+                } while (sender == receiver /*|| (Parameters.Graph[sender, receiver] == -1)*/);
 
                 Packets.Add(new Packet
                                 {
+                                    PacketId = Packets.Count + 1,
                                     Sender = sender,
                                     Receiver = receiver,
                                     Size = _rnd.Next(1, Parameters.MaxPacketSize),
@@ -81,5 +82,15 @@ namespace ADSCourseProject
 
             return new NetStateArgs { Time = DateTime.Now.ToLongTimeString(), O = (int)2 };
         }        
+
+        public void CreatePackets()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdatePackets()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

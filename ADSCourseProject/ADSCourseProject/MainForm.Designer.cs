@@ -50,21 +50,21 @@
             this.gViewer.ForwardEnabled = true;
             this.gViewer.Graph = null;
             this.gViewer.Location = new System.Drawing.Point(12, 12);
-            this.gViewer.MouseHitDistance = 0.05D;
+            this.gViewer.MouseHitDistance = 0.05;
             this.gViewer.Name = "gViewer";
             this.gViewer.NavigationVisible = false;
             this.gViewer.PanButtonPressed = false;
             this.gViewer.SaveButtonVisible = true;
             this.gViewer.Size = new System.Drawing.Size(407, 545);
             this.gViewer.TabIndex = 0;
-            this.gViewer.ZoomF = 1D;
-            this.gViewer.ZoomFraction = 0.5D;
-            this.gViewer.ZoomWindowThreshold = 0.05D;
+            this.gViewer.ZoomF = 1;
+            this.gViewer.ZoomFraction = 0.5;
+            this.gViewer.ZoomWindowThreshold = 0.05;
             this.gViewer.SelectionChanged += new System.EventHandler(this.gViewer_SelectionChanged);
             // 
             // nComputersCount
             // 
-            this.nComputersCount.Location = new System.Drawing.Point(559, 10);
+            this.nComputersCount.Location = new System.Drawing.Point(768, 10);
             this.nComputersCount.Maximum = new decimal(new int[] {
             10,
             0,
@@ -87,7 +87,7 @@
             // lblComputersCount
             // 
             this.lblComputersCount.AutoSize = true;
-            this.lblComputersCount.Location = new System.Drawing.Point(458, 12);
+            this.lblComputersCount.Location = new System.Drawing.Point(667, 12);
             this.lblComputersCount.Name = "lblComputersCount";
             this.lblComputersCount.Size = new System.Drawing.Size(95, 13);
             this.lblComputersCount.TabIndex = 2;
@@ -96,7 +96,7 @@
             // lblConnectsCount
             // 
             this.lblConnectsCount.AutoSize = true;
-            this.lblConnectsCount.Location = new System.Drawing.Point(463, 38);
+            this.lblConnectsCount.Location = new System.Drawing.Point(672, 38);
             this.lblConnectsCount.Name = "lblConnectsCount";
             this.lblConnectsCount.Size = new System.Drawing.Size(90, 13);
             this.lblConnectsCount.TabIndex = 4;
@@ -104,7 +104,7 @@
             // 
             // nConnectsCount
             // 
-            this.nConnectsCount.Location = new System.Drawing.Point(559, 36);
+            this.nConnectsCount.Location = new System.Drawing.Point(768, 36);
             this.nConnectsCount.Maximum = new decimal(new int[] {
             10,
             0,
@@ -126,7 +126,7 @@
             // 
             // btnDrawGraph
             // 
-            this.btnDrawGraph.Location = new System.Drawing.Point(425, 62);
+            this.btnDrawGraph.Location = new System.Drawing.Point(634, 62);
             this.btnDrawGraph.Name = "btnDrawGraph";
             this.btnDrawGraph.Size = new System.Drawing.Size(174, 23);
             this.btnDrawGraph.TabIndex = 5;
@@ -138,13 +138,13 @@
             // 
             this.tbLog.Location = new System.Drawing.Point(425, 147);
             this.tbLog.Name = "tbLog";
-            this.tbLog.Size = new System.Drawing.Size(174, 410);
+            this.tbLog.Size = new System.Drawing.Size(383, 410);
             this.tbLog.TabIndex = 6;
             this.tbLog.Text = "";
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(425, 91);
+            this.btnRun.Location = new System.Drawing.Point(634, 91);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(174, 23);
             this.btnRun.TabIndex = 7;
@@ -159,7 +159,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(425, 118);
+            this.btnStop.Location = new System.Drawing.Point(634, 118);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(174, 23);
             this.btnStop.TabIndex = 8;
@@ -171,7 +171,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 569);
+            this.ClientSize = new System.Drawing.Size(820, 569);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.tbLog);

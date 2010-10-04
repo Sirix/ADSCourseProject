@@ -19,6 +19,7 @@ namespace ADSCourseProject
             InitializeComponent();
 
             backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+            backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
             backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
 
             btnDrawGraph_Click(null, null);
@@ -78,6 +79,7 @@ namespace ADSCourseProject
                     if (peaks[i, j] != -1 && temp[i, j] != -1 && temp[j, i] != -1)
                     {
                         g.AddEdge(i.ToString(), peaks[i, j].ToString(), j.ToString());
+                        
                         temp[i, j] = -1;
                         temp[j, i] = -1;
                     }
@@ -151,7 +153,7 @@ namespace ADSCourseProject
 
             
             
-            this.backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(backgroundWorker_ProgressChanged);
+            
 
             //start background thread
             backgroundWorker.RunWorkerAsync();
@@ -170,6 +172,9 @@ namespace ADSCourseProject
                         ed.Source == p.Sender.ToString() &&
                         ed.Target == p.Receiver.ToString());
 
+                //gViewer.Graph.FindNode(p.Sender.ToString()).Blink(Microsoft.Glee.Drawing.Color.Chocolate);
+                
+
                 if (s != null)
                     s.EdgeAttr.Label = p.Size.ToString();
                 /*
@@ -179,9 +184,10 @@ namespace ADSCourseProject
                     gViewer.Graph.Edges.Add(s);
                 }*/
                 tbLog.AppendText(p.ToString());
+                this.gViewer.Invalidate();
             });
             tbLog.AppendFormat("\r\n Updated \r\n");
-            this.gViewer.Invalidate();
+            
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

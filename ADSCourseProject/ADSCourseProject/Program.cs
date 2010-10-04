@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace ADSCourseProject
 {
@@ -15,7 +16,14 @@ namespace ADSCourseProject
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            //try
+           // {
+                Application.Run(new MainForm());
+           // }
+          //  catch (TargetInvocationException ex)
+          //  {
+          //      throw ex.InnerException;
+          //  }
         }
     }
 }
