@@ -164,8 +164,7 @@ namespace ADSCourseProject
         //main UI update method
         void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //BUG: Lambda expression here can crush application on exit
-            o.Packets.ForEach(delegate(Packet p)
+            foreach (Packet p in o.Packets)
             {
                 var s =
                     gViewer.Graph.Edges.FirstOrDefault(
@@ -178,15 +177,10 @@ namespace ADSCourseProject
 
                 if (s != null)
                     s.EdgeAttr.Label = p.Size.ToString();
-                /*
-                if (s != null)
-                {
-                    //gViewer.Graph.Edges.Remove(s);
-                    gViewer.Graph.Edges.Add(s);
-                }*/
+
                 tbLog.AppendText(p.ToString());
                 this.gViewer.Invalidate();
-            });
+            }
             tbLog.AppendFormat("\r\n Updated \r\n");
             
         }
