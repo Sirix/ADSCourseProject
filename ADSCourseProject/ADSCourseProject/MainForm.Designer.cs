@@ -38,6 +38,7 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.btnStop = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nComputersCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nConnectsCount)).BeginInit();
             this.SuspendLayout();
@@ -50,16 +51,16 @@
             this.gViewer.ForwardEnabled = true;
             this.gViewer.Graph = null;
             this.gViewer.Location = new System.Drawing.Point(12, 12);
-            this.gViewer.MouseHitDistance = 0.05;
+            this.gViewer.MouseHitDistance = 0.05D;
             this.gViewer.Name = "gViewer";
             this.gViewer.NavigationVisible = false;
             this.gViewer.PanButtonPressed = false;
             this.gViewer.SaveButtonVisible = true;
             this.gViewer.Size = new System.Drawing.Size(407, 545);
             this.gViewer.TabIndex = 0;
-            this.gViewer.ZoomF = 1;
-            this.gViewer.ZoomFraction = 0.5;
-            this.gViewer.ZoomWindowThreshold = 0.05;
+            this.gViewer.ZoomF = 1D;
+            this.gViewer.ZoomFraction = 0.5D;
+            this.gViewer.ZoomWindowThreshold = 0.05D;
             this.gViewer.SelectionChanged += new System.EventHandler(this.gViewer_SelectionChanged);
             // 
             // nComputersCount
@@ -167,11 +168,22 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(467, 62);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 569);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.tbLog);
@@ -205,6 +217,7 @@
         private System.Windows.Forms.Button btnRun;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button button1;
     }
 }
 

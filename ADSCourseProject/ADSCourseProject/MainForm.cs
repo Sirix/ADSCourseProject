@@ -23,6 +23,7 @@ namespace ADSCourseProject
             backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
 
             btnDrawGraph_Click(null, null);
+            button1_Click(null, null);
         }
 
         private int[,] peaks;
@@ -234,6 +235,16 @@ namespace ADSCourseProject
          //   backgroundWorker.CancelAsync();
 
            ///// btnRun_Click(sender, e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WorkingBranch.Init();
+            WorkingBranch.FindShortWay(1, 3, 5,
+                WorkingBranch.Power, WorkingBranch.Way);
+            string s = "";
+            WorkingBranch.ShortWay.ForEach(i => s += i + " ");
+            MessageBox.Show(s);
         }
     }
 }
