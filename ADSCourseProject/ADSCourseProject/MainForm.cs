@@ -233,8 +233,9 @@ namespace ADSCourseProject
 
         private void button1_Click(object sender, EventArgs e)
         {
+            
             WorkingBranch.Init();
-            WorkingBranch.FindShortWay(1, 3, 5,
+            WorkingBranch.FindShortWay(1, 4, 5,
                 WorkingBranch.Power, WorkingBranch.Way);
             string s = "";
             WorkingBranch.ShortWay.ForEach(i => s += i + " ");

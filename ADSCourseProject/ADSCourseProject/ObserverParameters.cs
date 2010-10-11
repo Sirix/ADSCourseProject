@@ -22,6 +22,11 @@ namespace ADSCourseProject
         /// </summary>
         public int MaxPacketSize { get; set; }
 
+        /// <summary>
+        /// List of channel maxload values
+        /// </summary>
+        public int[] ChannelSizes = new int[] { 1, 5, 7, 10 };
+
         public ObserverParameters()
         {
             MaxPacketSize = 1024;

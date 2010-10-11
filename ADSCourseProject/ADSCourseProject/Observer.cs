@@ -92,5 +92,33 @@ namespace ADSCourseProject
         {
             throw new NotImplementedException();
         }
+        public List<ChannelInformation> channels;
+        public void CreateNetwork(int computersCount)
+        {
+            channels = new List<ChannelInformation>();
+
+            int connections = computersCount * 2;
+
+            Random r = new Random();
+
+            int get = 0;
+            while (get < connections)
+            {
+                int sender = r.Next(0, computersCount);
+                int target = r.Next(0, computersCount);
+
+                //select random broadband capacity
+                int capacity = this.Parameters.ChannelSizes[r.Next(0, this.Parameters.ChannelSizes.Length)];
+
+                //no self-to-self connections
+                if (sender == target) continue;
+
+                if (channels.Find(ci => (ci.A == sender && ci.B == target) || (ci.A == target && ci.B == sender)) == null)
+                {
+                    channels.Add(new ChannelInformation { A = sender, B = target, Load = 0, MaxLoad = capacity });
+                    get++;
+                }
+            }
+        }
     }
 }
