@@ -31,7 +31,5 @@ namespace ADSCourseProject
         {
             MaxPacketSize = 1024;
         }
-
-        public int[,] Graph { get; set; }
     }
 }

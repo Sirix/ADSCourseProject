@@ -27,6 +27,12 @@ namespace ADSCourseProject
         /// </summary>
         public ObserverParameters Parameters { get; private set; }
 
+        /// <summary>
+        /// Retrieves list of network connections. This property is read-only.
+        /// </summary>
+        public List<ChannelInformation> Channels { get; private set; }
+
+
         private Random _rnd = new Random();
         public Observer(ObserverParameters parameters)
         {
@@ -35,6 +41,8 @@ namespace ADSCourseProject
             Parameters = parameters;
 
             Packets = new List<Packet>();
+
+            this.CreateNetwork(Parameters.ComputersCount);
         }
 
         [Obsolete]
@@ -92,31 +100,28 @@ namespace ADSCourseProject
         {
             throw new NotImplementedException();
         }
-        public List<ChannelInformation> channels;
+
         public void CreateNetwork(int computersCount)
         {
-            channels = new List<ChannelInformation>();
+            Channels = new List<ChannelInformation>();
 
-            int connections = computersCount * 2;
+            int leftConnections = computersCount * 2;
 
-            Random r = new Random();
-
-            int get = 0;
-            while (get < connections)
+            while (leftConnections > 0)
             {
-                int sender = r.Next(0, computersCount);
-                int target = r.Next(0, computersCount);
+                int sender = _rnd.Next(0, computersCount);
+                int target = _rnd.Next(0, computersCount);
 
                 //select random broadband capacity
-                int capacity = this.Parameters.ChannelSizes[r.Next(0, this.Parameters.ChannelSizes.Length)];
+                int capacity = this.Parameters.ChannelSizes[_rnd.Next(0, this.Parameters.ChannelSizes.Length)];
 
                 //no self-to-self connections
                 if (sender == target) continue;
 
-                if (channels.Find(ci => (ci.A == sender && ci.B == target) || (ci.A == target && ci.B == sender)) == null)
+                if (Channels.Find(ci => (ci.A == sender && ci.B == target) || (ci.A == target && ci.B == sender)) == null)
                 {
-                    channels.Add(new ChannelInformation { A = sender, B = target, Load = 0, MaxLoad = capacity });
-                    get++;
+                    Channels.Add(new ChannelInformation { A = sender, B = target, Load = 0, MaxLoad = capacity });
+                    leftConnections--;
                 }
             }
         }

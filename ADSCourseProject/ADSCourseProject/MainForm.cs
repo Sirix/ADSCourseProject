@@ -23,74 +23,26 @@ namespace ADSCourseProject
             backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
 
             btnDrawGraph_Click(null, null);
-            button1_Click(null, null);
+           // button1_Click(null, null);
         }
 
-        private int[,] peaks;
         private void btnDrawGraph_Click(object sender, EventArgs e)
         {
-            int cc = (int) nComputersCount.Value;
-            //int connections = (int) nConnectsCount.Value;
-            int connections = cc*2;
-            //if(connections>
-
-            peaks = new int[cc,cc];
-
-            for (int i = 0; i < cc; i++)
-                for (int j = 0; j < cc; j++)
-                    peaks[i, j] = -1;
-
-            Random r = new Random();
-            
-            int get = 0;
-            while (get < connections)
+            o = new Observer(new ObserverParameters
             {
-                int s = r.Next(0, cc);
-                int t = r.Next(0, cc);
-                int v = r.Next(0, 100);
+                ComputersCount = (int)nComputersCount.Value,
+                TimeInterval = 1 * 1000
+            });
 
-                //no self-to-self connections
-                if (s == t) continue;
-
-                if (peaks[s, t] == -1 && peaks[t, s] == -1)
-                {
-                    /*int c = 0, z = 0;
-                    for (int i = 0; i < cc; i++)
-                    {
-                        if (peaks[s, i] != -1 || peaks[i, s] != -1) c++;
-                        if (peaks[t, i] != -1 || peaks[i, t] != -1) z++;
-                    }
-                    if (c > connections || z > connections) continue;
-                    */
-                    peaks[s, t] = v;
-                    peaks[t, s] = v;
-                    get++;
-                }
-            }
-
-            //save peak info to new data array.
-            //we'll mark items as draw them
-            int[,] temp = new int[cc,cc];
-                Array.Copy(peaks, temp, peaks.Length);
+          
             Graph g = new Graph("graph");
-            for (int i = 0; i < cc; i++)
-                for (int j = 0; j < cc; j++)
-                {
-                    //if edge exist and we not draw it and not draw back link
-                    if (peaks[i, j] != -1 && temp[i, j] != -1 && temp[j, i] != -1)
-                    {
-                        g.AddEdge(i.ToString(), peaks[i, j].ToString(), j.ToString());
-                        
-                        temp[i, j] = -1;
-                        temp[j, i] = -1;
-                    }
-                    //if (peaks[i, j] != -1 && (g.EdgeById(i.ToString() + j.ToString()) == null && g.EdgeById(j.ToString() + i.ToString()) == null))
-                        
-                }
+            foreach (var c in o.Channels)
+            {
+                Edge ed = g.AddEdge(c.A.ToString(), c.MaxLoad.ToString(), c.B.ToString());
+                ed.Attr.ArrowHeadAtTarget = ArrowStyle.None;
+            }
             gViewer.Graph = g;
-
-        }
-
+        }    
         object selectedObjectAttr;
         object selectedObject;
         void gViewer_SelectionChanged(object sender, EventArgs e)
@@ -115,7 +67,7 @@ namespace ADSCourseProject
             else
             {
                 selectedObject = gViewer.SelectedObject;
-
+                
                 if (selectedObject is Edge)
                 {
                     selectedObjectAttr = (gViewer.SelectedObject as Edge).Attr.Clone();
@@ -145,13 +97,7 @@ namespace ADSCourseProject
         private void btnRun_Click(object sender, EventArgs e)
         {
             //initialize observer
-            o = new Observer(new ObserverParameters
-                                 {
-                                     ComputersCount = (int) nComputersCount.Value,
-                                     TimeInterval = 1*1000,
-                                     Graph = peaks
-                                 });
-
+            
             
             
             
@@ -164,6 +110,7 @@ namespace ADSCourseProject
         //main UI update method
         void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            
             foreach (Packet p in o.Packets)
             {
                 var s =

@@ -80,7 +80,7 @@
             this.nComputersCount.Size = new System.Drawing.Size(40, 20);
             this.nComputersCount.TabIndex = 1;
             this.nComputersCount.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -170,11 +170,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(467, 62);
+            this.button1.Location = new System.Drawing.Point(489, 38);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(98, 23);
             this.button1.TabIndex = 9;
-            this.button1.Text = "button1";
+            this.button1.Text = "[DEBUG] button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
