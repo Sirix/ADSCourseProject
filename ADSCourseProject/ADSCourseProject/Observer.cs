@@ -7,9 +7,6 @@ using System.Windows.Forms;
 
 namespace ADSCourseProject
 {
-    [Obsolete]
-    public delegate void ObserverEventHandler(NetStateArgs e);
-
     public class Observer
     {
         /// <summary>
@@ -34,6 +31,11 @@ namespace ADSCourseProject
 
 
         private Random _rnd = new Random();
+
+        /// <summary>
+        /// Initializes new instance of Observer with parameters
+        /// </summary>
+        /// <param name="parameters">Observer Parameters</param>
         public Observer(ObserverParameters parameters)
         {
             Cancelling = false;
@@ -44,18 +46,8 @@ namespace ADSCourseProject
 
             this.CreateNetwork(Parameters.ComputersCount);
         }
-
-        [Obsolete]
-        public event ObserverEventHandler ObserverStateChanged;
-
-        [Obsolete]
-        private void InvokeObserverStateChanged()
-        {
-            ObserverEventHandler handler = ObserverStateChanged;
-            if (handler != null) handler(new NetStateArgs { Time = DateTime.Now.ToLongTimeString() });
-        }
      
-        public NetStateArgs Tick(object o)
+        public void Tick(object o)
         {
             int packetsCount = _rnd.Next(0, Parameters.ComputersCount);
 
@@ -87,8 +79,6 @@ namespace ADSCourseProject
             //TODO: Update sleep interval to (WaitingTimeInterval - RealTime)
             Thread.Sleep(Parameters.TimeInterval);
             //this.Cancelling = true;
-
-            return new NetStateArgs { Time = DateTime.Now.ToLongTimeString(), O = (int)2 };
         }        
 
         public void CreatePackets()

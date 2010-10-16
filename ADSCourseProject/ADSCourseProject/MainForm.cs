@@ -42,6 +42,7 @@ namespace ADSCourseProject
                 ed.Attr.ArrowHeadAtTarget = ArrowStyle.None;
             }
             gViewer.Graph = g;
+
         }    
         object selectedObjectAttr;
         object selectedObject;
@@ -96,21 +97,15 @@ namespace ADSCourseProject
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            //initialize observer
-            
-            
-            
-            
-
             //start background thread
             backgroundWorker.RunWorkerAsync();
+
             btnRun.Enabled = false;
         }
 
         //main UI update method
         void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            
             foreach (Packet p in o.Packets)
             {
                 var s =
@@ -148,18 +143,12 @@ namespace ADSCourseProject
                 }
                 else
                 {
-                    var s = o.Tick(e.Argument);
-                    backgroundWorker.ReportProgress(1, s);
+                    o.Tick(e.Argument);
+                    backgroundWorker.ReportProgress(1, new object());
                     e.Cancel = false;
                 }
             }
             e.Cancel = true;
-        }
-
-        void o_ObserverStateChanged(NetStateArgs e)
-        {
-            if (!backgroundWorker.CancellationPending)
-                this.backgroundWorker.ReportProgress(0, e);
         }
 
         //TODO: Move cancelAsync call to one method(e.g.WPF command)
