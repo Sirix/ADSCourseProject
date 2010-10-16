@@ -18,18 +18,24 @@ namespace ADSCourseProject
         public int TimeInterval { get; set; }
 
         /// <summary>
-        /// Maximal packet size in network
+        /// Maximum data size(in packets) in network
         /// </summary>
-        public int MaxPacketSize { get; set; }
+        public int MaxDataSize { get; set; }
 
         /// <summary>
-        /// List of channel maxload values
+        /// Maximum count of data files created in network per one tick
+        /// </summary>
+        public int MaxDataCountPerTick { get; set; }
+
+        /// <summary>
+        /// List of allowed channel maxload(simultaneously, in packets) values
         /// </summary>
         public int[] ChannelSizes = new int[] { 1, 5, 7, 10 };
 
         public ObserverParameters()
         {
-            MaxPacketSize = 1024;
+            MaxDataSize = 10;
+            MaxDataCountPerTick = 2;
         }
     }
 }

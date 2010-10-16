@@ -19,9 +19,25 @@ namespace ADSCourseProject
         public int Sender { get; set; }
         public int Receiver { get; set; }
 
+        [Obsolete]
         public DateTime Timestamp { get; set; }
+
+        [Obsolete]
         public int Size { get; set; }
 
+        #region Underdev
+        /// <summary>
+        /// Current host id, on which packet located
+        /// </summary>
+        public int CurrentHost { get; set; }
+
+        /// <summary>
+        /// Proposing route to end point
+        /// </summary>
+        public List<int> Route { get; set; }
+        #endregion
+
+        [Obsolete("Use Logger.PacketSend instead")]
         public override string ToString()
         {
             return string.Format("Packet {4}: [{0} -> {1}]:[{2}], Size: {3}\r\n", Sender, Receiver, Timestamp, Size, PacketId);

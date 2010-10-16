@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ADSCourseProject.Log
+namespace ADSCourseProject
 {
     /// <summary>
     /// Specifies type of log entry

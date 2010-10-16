@@ -33,6 +33,12 @@ namespace ADSCourseProject
         private Random _rnd = new Random();
 
         /// <summary>
+        /// Specifies id of last sended data file
+        /// </summary>
+        private int _lastdataFileId = 0;
+
+
+        /// <summary>
         /// Initializes new instance of Observer with parameters
         /// </summary>
         /// <param name="parameters">Observer Parameters</param>
@@ -47,29 +53,43 @@ namespace ADSCourseProject
             this.CreateNetwork(Parameters.ComputersCount);
         }
      
-        public void Tick(object o)
+        public object Tick(object o)
         {
-            int packetsCount = _rnd.Next(0, Parameters.ComputersCount);
+            Log.Instance.Records.Clear();
 
-            packetsCount = 2;
-            for (int i = 0; i < packetsCount; i++)
+            int dataCount = _rnd.Next(0, Parameters.MaxDataCountPerTick);
+
+            for (int i = 0; i < dataCount; i++)
             {
                 int sender, receiver;
-                //preventing from self packet sending
+                //preventing from self data sending
                 do
                 {
                     sender = _rnd.Next(0, Parameters.ComputersCount);
                     receiver = _rnd.Next(0, Parameters.ComputersCount);
-                } while (sender == receiver /*|| (Parameters.Graph[sender, receiver] == -1)*/);
+                } while (sender == receiver);
 
-                Packets.Add(new Packet
-                                {
-                                    PacketId = Packets.Count + 1,
-                                    Sender = sender,
-                                    Receiver = receiver,
-                                    Size = _rnd.Next(1, Parameters.MaxPacketSize),
-                                    Timestamp = DateTime.Now
-                                });
+                //create data size
+                int dataSize = _rnd.Next(1, Parameters.MaxDataSize);
+
+                int dataId = _lastdataFileId++;
+
+                Log.Instance.DataSend(dataId, dataSize, sender, receiver);
+
+                //split into packets
+                for (int j = 1; j <= dataSize; j++)
+                {
+                    Log.Instance.PacketSend(j, dataId, sender, receiver);
+
+                    Packets.Add(new Packet
+                                    {
+                                        DataId = dataId,
+                                        PacketId = j,
+                                        Sender = sender,
+                                        Receiver = receiver,
+                                        CurrentHost = sender
+                                    });
+                }
             }
 
             //Packet updating 
@@ -79,6 +99,7 @@ namespace ADSCourseProject
             //TODO: Update sleep interval to (WaitingTimeInterval - RealTime)
             Thread.Sleep(Parameters.TimeInterval);
             //this.Cancelling = true;
+            return new object();
         }        
 
         public void CreatePackets()

@@ -106,25 +106,28 @@ namespace ADSCourseProject
         //main UI update method
         void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            foreach (Packet p in o.Packets)
+            //thread concurrence error protection
+            object locker = new object();
+            LogEntry[] le;
+            lock(locker)
             {
-                var s =
-                    gViewer.Graph.Edges.FirstOrDefault(
-                        ed =>
-                        ed.Source == p.Sender.ToString() &&
-                        ed.Target == p.Receiver.ToString());
-
-                //gViewer.Graph.FindNode(p.Sender.ToString()).Blink(Microsoft.Glee.Drawing.Color.Chocolate);
-                
-
-                if (s != null)
-                    s.EdgeAttr.Label = p.Size.ToString();
-
-                tbLog.AppendText(p.ToString());
-                this.gViewer.Invalidate();
+                le = new LogEntry[Log.Instance.Records.Count];
+                Log.Instance.Records.CopyTo(le);
             }
-            tbLog.AppendFormat("\r\n Updated \r\n");
-            
+            //end protection
+
+            foreach(var r in le)
+            {
+                System.Drawing.Color color = tbLog.ForeColor;
+                if (r.LogType == Type.DataSended)
+                    color = System.Drawing.Color.Green;
+
+                if (r.LogType == Type.PacketSended)
+                    color = System.Drawing.Color.Khaki;
+
+                tbLog.AppendColorText(r.Message, color);
+            }
+            tbLog.AppendLine("Updated");
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -143,8 +146,8 @@ namespace ADSCourseProject
                 }
                 else
                 {
-                    o.Tick(e.Argument);
-                    backgroundWorker.ReportProgress(1, new object());
+                    var s = o.Tick(e.Argument);
+                    backgroundWorker.ReportProgress(1, s);
                     e.Cancel = false;
                 }
             }
