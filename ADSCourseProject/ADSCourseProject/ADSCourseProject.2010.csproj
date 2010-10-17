@@ -55,7 +55,7 @@
   <ItemGroup>
     <Compile Include="ChannelInformation.cs" />
     <Compile Include="Log\LogEntry.cs" />
-    <Compile Include="Log\Type.cs" />
+    <Compile Include="Log\LogType.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -92,9 +92,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

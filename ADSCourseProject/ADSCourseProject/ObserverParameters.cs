@@ -30,12 +30,13 @@ namespace ADSCourseProject
         /// <summary>
         /// List of allowed channel maxload(simultaneously, in packets) values
         /// </summary>
-        public int[] ChannelSizes = new int[] { 1, 5, 7, 10 };
+        public IEnumerable<int> ChannelSizes { get; set; }
 
         public ObserverParameters()
         {
             MaxDataSize = 10;
             MaxDataCountPerTick = 2;
+            ChannelSizes = new int[] {1, 5, 7, 10};
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Windows.Forms;
+using ADSCourseProject.Log;
 
 namespace ADSCourseProject
 {
@@ -52,11 +52,27 @@ namespace ADSCourseProject
 
             this.CreateNetwork(Parameters.ComputersCount);
         }
-     
-        public object Tick(object o)
-        {
-            Log.Instance.Records.Clear();
 
+        public object Tick()
+        {
+            this.CreateAndSplitDataFiles();
+
+            //Start packet moving 
+            //End packet moving
+
+            Thread.Sleep(Parameters.TimeInterval);
+
+            Logger.Instance.TickCompleted();
+            Logger.Instance.Tick++;
+
+            return new object();
+        }        
+
+        /// <summary>
+        /// Creates and split new data files to packets
+        /// </summary>
+        public void CreateAndSplitDataFiles()
+        {
             int dataCount = _rnd.Next(0, Parameters.MaxDataCountPerTick);
 
             for (int i = 0; i < dataCount; i++)
@@ -72,39 +88,26 @@ namespace ADSCourseProject
                 //create data size
                 int dataSize = _rnd.Next(1, Parameters.MaxDataSize);
 
-                int dataId = _lastdataFileId++;
+                _lastdataFileId++;
+                int dataId = _lastdataFileId;
 
-                Log.Instance.DataSend(dataId, dataSize, sender, receiver);
+                Logger.Instance.DataSend(dataId, dataSize, sender, receiver);
 
                 //split into packets
                 for (int j = 1; j <= dataSize; j++)
                 {
-                    Log.Instance.PacketSend(j, dataId, sender, receiver);
+                    Logger.Instance.PacketSend(j, dataId, sender, receiver);
 
                     Packets.Add(new Packet
-                                    {
-                                        DataId = dataId,
-                                        PacketId = j,
-                                        Sender = sender,
-                                        Receiver = receiver,
-                                        CurrentHost = sender
-                                    });
+                    {
+                        DataId = dataId,
+                        PacketId = j,
+                        Sender = sender,
+                        Receiver = receiver,
+                        CurrentHost = sender
+                    });
                 }
             }
-
-            //Packet updating 
-
-
-            //
-            //TODO: Update sleep interval to (WaitingTimeInterval - RealTime)
-            Thread.Sleep(Parameters.TimeInterval);
-            //this.Cancelling = true;
-            return new object();
-        }        
-
-        public void CreatePackets()
-        {
-            throw new NotImplementedException();
         }
 
         public void UpdatePackets()
@@ -124,7 +127,7 @@ namespace ADSCourseProject
                 int target = _rnd.Next(0, computersCount);
 
                 //select random broadband capacity
-                int capacity = this.Parameters.ChannelSizes[_rnd.Next(0, this.Parameters.ChannelSizes.Length)];
+                int capacity = this.Parameters.ChannelSizes.ElementAt(_rnd.Next(0, Parameters.ChannelSizes.Count()));
 
                 //no self-to-self connections
                 if (sender == target) continue;

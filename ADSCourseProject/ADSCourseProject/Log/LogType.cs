@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ADSCourseProject
+namespace ADSCourseProject.Log
 {
     /// <summary>
     /// Specifies type of log entry
     /// </summary>
     [Flags]
-    public enum Type
+    public enum LogType
     {
         /// <summary>
         /// New data has been sended
@@ -38,6 +38,18 @@ namespace ADSCourseProject
         /// <summary>
         /// Packet has been moved
         /// </summary>
-        PacketMoved
+        PacketMoved,
+        /// <summary>
+        /// Packet waiting at the host due to some reasons
+        /// </summary>
+        PacketWaiting,
+        /// <summary>
+        /// Channel has been overloaded
+        /// </summary>
+        ChannelOverload,
+        /// <summary>
+        /// Tick has been completed
+        /// </summary>
+        TickCompleted
     }
 }

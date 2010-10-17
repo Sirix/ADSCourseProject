@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.Glee.Drawing;
+using ADSCourseProject.Log;
 
 namespace ADSCourseProject
 {
@@ -97,12 +98,14 @@ namespace ADSCourseProject
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            o.Cancelling = false;
             //start background thread
             backgroundWorker.RunWorkerAsync();
 
             btnRun.Enabled = false;
+            btnStop.Enabled = true;
         }
-
+        private int lastGener = 0;
         //main UI update method
         void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -111,23 +114,24 @@ namespace ADSCourseProject
             LogEntry[] le;
             lock(locker)
             {
-                le = new LogEntry[Log.Instance.Records.Count];
-                Log.Instance.Records.CopyTo(le);
+                le = new LogEntry[Logger.Instance.Records.Count];
+                Logger.Instance.Records.CopyTo(le, 0);
             }
             //end protection
 
-            foreach(var r in le)
+            foreach (var r in le.Where(er => er.Tick == lastGener))
             {
                 System.Drawing.Color color = tbLog.ForeColor;
-                if (r.LogType == Type.DataSended)
+                if (r.LogType == LogType.DataSended)
                     color = System.Drawing.Color.Green;
 
-                if (r.LogType == Type.PacketSended)
+                if (r.LogType == LogType.PacketSended)
                     color = System.Drawing.Color.Khaki;
 
                 tbLog.AppendColorText(r.Message, color);
             }
-            tbLog.AppendLine("Updated");
+            tbLog.AppendText("\n");
+            lastGener++;
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -146,7 +150,7 @@ namespace ADSCourseProject
                 }
                 else
                 {
-                    var s = o.Tick(e.Argument);
+                    var s = o.Tick();
                     backgroundWorker.ReportProgress(1, s);
                     e.Cancel = false;
                 }
@@ -162,12 +166,11 @@ namespace ADSCourseProject
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            o.Cancelling = !o.Cancelling;
+            o.Cancelling = true;
+            backgroundWorker.CancelAsync();
 
-            //o.Cancelling = !o.Cancelling;
-         //   backgroundWorker.CancelAsync();
-
-           ///// btnRun_Click(sender, e);
+            btnRun.Enabled = true;
+            btnStop.Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
