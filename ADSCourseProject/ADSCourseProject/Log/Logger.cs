@@ -33,9 +33,9 @@ namespace ADSCourseProject.Log
         public void Add(string message, LogType type)
         {
             Records.Add(new LogEntry {LogType = type, Message = message});
-        }   
+        }
 
-// ReSharper disable InconsistentNaming
+        // ReSharper disable InconsistentNaming
         /// <summary>
         /// Log DataSend event, occured when new data file created
         /// </summary>
@@ -44,16 +44,35 @@ namespace ADSCourseProject.Log
         /// <param name="A">A-host(source)</param>
         /// <param name="B">B-host(target)</param>
         public void DataSend(int dataId, int size, int A, int B)
-// ReSharper restore InconsistentNaming
+        // ReSharper restore InconsistentNaming
         {
             Records.Add(new LogEntry
-                            {
-                                LogType = LogType.DataSended,
-                                Message =
-                                    string.Format("[{0}]: New data file(ID:{1}) with size ({4}) task created: {2}->{3}",
-                                                  DateTime.Now.ToLongTimeString(), dataId, A, B, size),
-                                Tick = Tick
-                            });
+            {
+                LogType = LogType.DataSended,
+                Message =
+                    string.Format("[{0}]: New data file(ID:{1}) with size ({4}) task created: {2}->{3}",
+                                  DateTime.Now.ToLongTimeString(), dataId, A, B, size),
+                Tick = Tick
+            });
+        }
+        // ReSharper disable InconsistentNaming
+        /// <summary>
+        /// Log DataReceived event, occured when data file has been successfully received
+        /// </summary>
+        /// <param name="dataId">Data file id</param>
+        /// <param name="A">A-host(source)</param>
+        /// <param name="B">B-host(target)</param>
+        public void DataReceived(int dataId, int A, int B)
+        // ReSharper restore InconsistentNaming
+        {
+            Records.Add(new LogEntry
+            {
+                LogType = LogType.DataReceived,
+                Message =
+                    string.Format("[{0}]: Data file(ID:{1}) has been successfully transmiited via {2}->{3}",
+                                  DateTime.Now.ToLongTimeString(), dataId, A, B),
+                Tick = Tick
+            });
         }
 
         // ReSharper disable InconsistentNaming

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using ADSCourseProject.Log;
+using System.Diagnostics;
 
 namespace ADSCourseProject
 {
@@ -57,8 +58,9 @@ namespace ADSCourseProject
         {
             this.CreateAndSplitDataFiles();
 
-            //Start packet moving 
-            //End packet moving
+            this.MovePackets();
+
+            this.CombineDataFile();
 
             Thread.Sleep(Parameters.TimeInterval);
 
@@ -66,7 +68,9 @@ namespace ADSCourseProject
             Logger.Instance.Tick++;
 
             return new object();
-        }        
+        }
+
+               
 
         /// <summary>
         /// Creates and split new data files to packets
@@ -84,6 +88,7 @@ namespace ADSCourseProject
                     sender = _rnd.Next(0, Parameters.ComputersCount);
                     receiver = _rnd.Next(0, Parameters.ComputersCount);
                 } while (sender == receiver);
+                //} while (false);
 
                 //create data size
                 int dataSize = _rnd.Next(1, Parameters.MaxDataSize);
@@ -110,10 +115,26 @@ namespace ADSCourseProject
             }
         }
 
-        public void UpdatePackets()
+        public void MovePackets()
         {
-            throw new NotImplementedException();
+            Debug.Write("Not yet implemented\n");
         }
+
+        private void CombineDataFile()
+        {
+            var datasReceived = (from p in Packets
+                                 where p.Receiver == p.CurrentHost
+                                 orderby p.DataId
+                                 select new { p.DataId, p.Sender, p.Receiver }).Distinct().ToList();
+
+            if (datasReceived.Count == 0) return;
+
+            //send notify
+            datasReceived.ForEach(d => Logger.Instance.DataReceived(d.DataId, d.Sender, d.Receiver));
+
+            //remove packets
+            datasReceived.ForEach(d => Packets.RemoveAll(p => p.DataId == d.DataId));
+        } 
 
         public void CreateNetwork(int computersCount)
         {

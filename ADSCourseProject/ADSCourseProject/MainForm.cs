@@ -32,7 +32,7 @@ namespace ADSCourseProject
             o = new Observer(new ObserverParameters
             {
                 ComputersCount = (int)nComputersCount.Value,
-                TimeInterval = 1 * 1000
+                TimeInterval = 1 * 500
             });
 
           
